@@ -1,0 +1,4 @@
+Usage:
+  dependabot scan [DIRECTORY]
+
+Scan a directory

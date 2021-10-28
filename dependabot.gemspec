@@ -18,4 +18,5 @@ Gem::Specification.new do |spec|
   spec.summary = "The Dependabot CLI"
   spec.version = Dependabot::VERSION
   spec.add_dependency "dependabot-omnibus", "~> 0.1"
+  spec.add_dependency "thor", "~> 1.1"
 end

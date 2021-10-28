@@ -3,6 +3,7 @@ PATH
   specs:
     dependabot (0.1.0)
       dependabot-omnibus (~> 0.1)
+      thor (~> 1.1)
 
 GEM
   remote: https://rubygems.org/
@@ -200,6 +201,7 @@ GEM
       faraday (> 0.8, < 2.0)
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
+    thor (1.1.0)
     toml-rb (2.0.1)
       citrus (~> 3.0, > 3.0)
     tzinfo (2.0.4)

@@ -2,3 +2,14 @@
 # frozen_string_literal: true
 
 require "dependabot"
+
+Signal.trap("INT") do
+  exit(1)
+end
+
+begin
+  Dependabot::CLI.start
+rescue StandardError => boom
+  warn "ERROR: #{boom.message}"
+  exit 1
+end
