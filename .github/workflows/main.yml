@@ -1,27 +1,31 @@
-name: Ruby
-
+name: _
 on:
   push:
     branches:
       - main
-
   pull_request:
-
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
-
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.0.2
+        bundler-cache: true
+    - run: ./script/setup
+    - run: ./script/lint
+  test:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         ruby:
           - 3.0.2
-
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
+    - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true
-    - name: Run the default task
-      run: bundle exec rake
+    - run: ./script/setup
+    - run: ./script/test
