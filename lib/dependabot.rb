@@ -4,5 +4,10 @@ require_relative "dependabot/version"
 
 module Dependabot
   class Error < StandardError; end
-  # Your code goes here...
+
+  class CLI
+    def to_s
+      "Dependabot"
+    end
+  end
 end

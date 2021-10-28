@@ -1,6 +1,7 @@
 require:
   - rubocop-rake
   - rubocop-rspec
+
 AllCops:
   NewCops: enable
   TargetRubyVersion: 3.0
@@ -13,5 +14,86 @@ Style/StringLiteralsInInterpolation:
   Enabled: true
   EnforcedStyle: double_quotes
 
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/ParameterAlignment:
+  Enabled: true
+  EnforcedStyle: with_fixed_indentation
+  IndentationWidth: 2
+
+Layout/EndOfLine:
+  EnforcedStyle: lf
+
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/MultilineMethodCallIndentation:
+  Enabled: true
+  EnforcedStyle: indented
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - 'spec/**/*.rb'
+
+Lint/RaiseException:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
+
+Metrics/BlockLength:
+  Exclude:
+    - '*.gemspec'
+    - 'Rakefile'
+    - 'spec/**/*.rb'
+
+Metrics/ModuleLength:
+  Exclude:
+    - 'spec/**/*.rb'
+
 Layout/LineLength:
-  Max: 120
+  Exclude:
+    - 'spec/**/*.rb'
+  IgnoredPatterns:
+    - '^#*'
+
+Naming/RescuedExceptionsVariableName:
+  PreferredName: boom
+
+Style/Documentation:
+  Enabled: false
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
+Style/WordArray:
+  Enabled: false
+
+Style/TrailingCommaInArrayLiteral:
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Max: 80
+
+RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/FilePath:
+  Enabled: false
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/integration/**/*'
