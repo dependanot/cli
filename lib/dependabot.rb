@@ -1,18 +1,20 @@
 # frozen_string_literal: true
 
-require "thor"
+require "logger"
+
 require_relative "dependabot/version"
+require_relative "dependabot/tracer"
+
+# require "dependabot/omnibus"
 
 module Dependabot
   class Error < StandardError; end
 
-  class CLI < Thor
-    desc "scan [DIRECTORY]", "Scan a directory"
-    def scan(lockfile = Pathname.pwd); end
+  def self.logger
+    @logger ||= Logger.new(&stdout)
+  end
 
-    desc "version", "Print the current version"
-    def version
-      $stdout.puts "v#{Dependabot::VERSION}"
-    end
+  def self.tracer
+    @tracer ||= Tracer.new(logger)
   end
 end

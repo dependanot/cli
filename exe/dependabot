@@ -1,14 +1,14 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require "dependabot"
+require "dependabot/cli"
 
 Signal.trap("INT") do
   exit(1)
 end
 
 begin
-  Dependabot::CLI.start
+  Dependabot::CLI::Application.start
 rescue StandardError => boom
   warn "ERROR: #{boom.message}"
   exit 1

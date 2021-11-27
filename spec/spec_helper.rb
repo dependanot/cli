@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "bundler/setup"
-require "dependabot"
+require "dependabot/cli"
 
 require "securerandom"
 require "tmpdir"
