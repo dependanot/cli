@@ -6,7 +6,11 @@ require "dependabot"
 module Dependabot
   class CLI < Thor
     desc "scan [DIRECTORY]", "Scan a directory"
-    def scan(lockfile = Pathname.pwd); end
+    def scan(path = Dir.pwd)
+      Pathname(path).glob("Gemfile.lock").each do |pathname|
+        puts pathname.inspect
+      end
+    end
 
     desc "version", "Print the current version"
     def version
