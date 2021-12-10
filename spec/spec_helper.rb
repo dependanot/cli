@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 require "bundler/setup"
-require "dependabot"
-
+require "dependabot/cli"
 require "securerandom"
 require "tmpdir"
 
@@ -10,7 +9,6 @@ Dir["./spec/support/**/*.rb"].each { |f| require f }
 
 RSpec.configure do |config|
   Kernel.srand config.seed
-
   config.disable_monkey_patching!
   config.example_status_persistence_file_path = ".rspec_status"
   config.expect_with(:rspec) { |c| c.syntax = :expect }
