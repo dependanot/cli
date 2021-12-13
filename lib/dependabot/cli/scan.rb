@@ -10,7 +10,9 @@ module Dependabot
       end
 
       def run(options)
-        puts [path, options].inspect
+        path.glob("Gemfile.lock").each do |pathname|
+          puts pathname.inspect
+        end
       end
     end
   end
