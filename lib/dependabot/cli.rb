@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "thor"
+require "spandx"
 require "dependabot"
 require "dependabot/cli/scan"
 
@@ -9,7 +10,7 @@ module Dependabot
     class Application < Thor
       desc "scan [DIRECTORY]", "Scan a directory"
       def scan(path = Pathname.pwd)
-        ::Dependabot::CLI::Scan.new(path).run(options)
+        ::Dependabot::CLI::Scan.new(path, options).run
       end
 
       desc "version", "Print the current version"

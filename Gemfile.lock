@@ -2,18 +2,33 @@ PATH
   remote: .
   specs:
     dependabot (0.1.0)
+      spandx (~> 0.1)
       thor (~> 1.1)
 
 GEM
   remote: https://rubygems.org/
   specs:
+    addressable (2.8.0)
+      public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.2)
     diff-lcs (1.4.4)
+    hcl2 (0.1.0)
+      parslet (~> 2.0)
+    mini_portile2 (2.6.1)
+    net-hippie (1.1.1)
+    nokogiri (1.12.5)
+      mini_portile2 (~> 2.6.1)
+      racc (~> 1.4)
+    oj (3.13.10)
     parallel (1.21.0)
     parser (3.0.2.0)
       ast (~> 2.4.1)
+    parslet (2.0.0)
+    public_suffix (4.0.6)
+    racc (1.6.0)
     rainbow (3.0.0)
     rake (13.0.6)
+    rbtree (0.4.4)
     regexp_parser (2.1.1)
     rexml (3.2.5)
     rspec (3.10.0)
@@ -45,8 +60,31 @@ GEM
     rubocop-rspec (2.5.0)
       rubocop (~> 1.19)
     ruby-progressbar (1.11.0)
+    set (1.0.2)
+    sorted_set (1.0.3)
+      rbtree
+      set (~> 1.0)
+    spandx (0.18.2)
+      addressable (~> 2.7)
+      bundler (>= 1.16, < 3.0.0)
+      hcl2 (~> 0.1)
+      net-hippie (~> 1.0)
+      nokogiri (~> 1.10)
+      oj (~> 3.10)
+      parslet (~> 2.0)
+      sorted_set (~> 1.0)
+      terminal-table (~> 1.8)
+      thor
+      tty-spinner (~> 0.9)
+      zeitwerk (~> 2.3)
+    terminal-table (1.8.0)
+      unicode-display_width (~> 1.1, >= 1.1.1)
     thor (1.1.0)
+    tty-cursor (0.7.1)
+    tty-spinner (0.9.3)
+      tty-cursor (~> 0.7)
     unicode-display_width (1.8.0)
+    zeitwerk (2.5.1)
 
 PLATFORMS
   ruby
@@ -60,4 +98,4 @@ DEPENDENCIES
   rubocop-rspec
 
 BUNDLED WITH
-   2.2.32
+   2.2.33
