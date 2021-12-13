@@ -2,10 +2,8 @@
 
 require "logger"
 
-require_relative "dependabot/version"
 require_relative "dependabot/tracer"
-
-# require "dependabot/omnibus"
+require_relative "dependabot/version"
 
 module Dependabot
   class Error < StandardError; end

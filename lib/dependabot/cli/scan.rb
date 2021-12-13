@@ -3,12 +3,14 @@
 module Dependabot
   module CLI
     class Scan
+      attr_reader :path
+
       def initialize(path)
-        @path = path
+        @path = Pathname.new(path)
       end
 
       def run(options)
-        puts [@path, options].inspect
+        puts [path, options].inspect
       end
     end
   end

@@ -10,6 +10,6 @@ end
 begin
   Dependabot::CLI::Application.start
 rescue StandardError => boom
-  warn "ERROR: #{boom.message}"
+  warn (["ERROR (#{boom.class}): #{boom.message}"] + boom.backtrace).join("\n")
   exit 1
 end

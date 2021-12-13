@@ -9,8 +9,8 @@ module Dependabot
     def trace(defaults = {})
       tracer = TracePoint.new(:call) do |x|
         @logger.debug(defaults.merge({ path: x.path, lineno: x.lineno, clazz: x.defined_class, method: x.method_id, args: args_from(x), locals: locals_from(x) }))
-      rescue => error
-        @logger.error(defaults.merge({ message: error.message, stacktrace: error.backtrace }))
+      rescue StandardError => boom
+        @logger.error(defaults.merge({ message: boom.message, stacktrace: boom.backtrace }))
       end
       tracer.enable
       yield
