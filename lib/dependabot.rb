@@ -2,6 +2,7 @@
 
 require "logger"
 
+require_relative "dependabot/bundler/update"
 require_relative "dependabot/tracer"
 require_relative "dependabot/version"
 

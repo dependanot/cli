@@ -1,22 +1,6 @@
 # frozen_string_literal: true
 
 module Dependabot
-  class BundleUpdatePlugin < Spandx::Core::Plugin
-    def enhance(dependency)
-      if dependency.package_manager == :rubygems
-        Dir.chdir(dependency.path.parent) do
-          Bundler.with_unbundled_env do
-            puts "Updating... #{dependency.name}"
-            system "bundle update #{dependency.name} --conservative --quiet --full-index"
-            system "git diff --patch --no-color"
-            system "git checkout ."
-          end
-        end
-      end
-
-      dependency
-    end
-  end
 
   module CLI
     class Scan
@@ -29,7 +13,12 @@ module Dependabot
 
       def run
         each_dependency do |dependency|
-          ::Spandx::Core::Plugin.enhance(dependency)
+          Dir.chdir(dependency.path.parent) do
+            puts "Updating... #{dependency.name}"
+            ::Spandx::Core::Plugin.enhance(dependency)
+            system "git diff --patch --no-color"
+            system "git checkout ."
+          end
         end
       end
 
