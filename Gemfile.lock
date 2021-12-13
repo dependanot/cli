@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dependabot (0.1.0)
+    dependanot (0.1.0)
       spandx (~> 0.1)
       thor (~> 1.1)
 
@@ -90,7 +90,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  dependabot!
+  dependanot!
   rake (~> 13.0)
   rspec (~> 3.0)
   rubocop (~> 1.7)
