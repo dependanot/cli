@@ -10,6 +10,9 @@ module Dependabot
       desc "scan [DIRECTORY]", "Scan a directory"
       def scan(path = Pathname.pwd)
         ::Dependabot::CLI::Scan.new(path).run(options)
+        Pathname(path).glob("Gemfile.lock").each do |pathname|
+          puts pathname.inspect
+        end
       end
 
       desc "version", "Print the current version"
