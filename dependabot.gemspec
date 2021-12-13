@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.bindir = "exe"
   spec.description = "The Dependabot CLI"
   spec.email = ["xlgmokha@github.com"]
-  spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
+  spec.executables = "exe/dependabot"
   spec.files = Dir.glob("lib/**/*.rb") + Dir.glob("exe/*") + Dir.glob("*.gemspec") + ["LICENSE.txt", "README.md"]
   spec.homepage = "https://github.com/dependanot/dependanot"
   spec.license = "MIT"
