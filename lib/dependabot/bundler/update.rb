@@ -2,7 +2,7 @@
 
 module Dependabot
   module Bundler
-    class Update < Spandx::Core::Plugin
+    class Update < ::Spandx::Core::Plugin
       def enhance(dependency)
         return unless dependency.package_manager == :rubygems
 

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module Dependabot
-
   module CLI
     class Scan
       attr_reader :path
@@ -24,17 +23,15 @@ module Dependabot
 
       private
 
-      def each_file
+      def each_file(&block)
         ::Spandx::Core::PathTraversal
           .new(path, recursive: false)
-          .each { |file| yield file }
+          .each(&block)
       end
 
-      def each_dependency
+      def each_dependency(&block)
         each_file do |file|
-          ::Spandx::Core::Parser.parse(file).each do |dependency|
-            yield dependency
-          end
+          ::Spandx::Core::Parser.parse(file).each(&block)
         end
       end
     end

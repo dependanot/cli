@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "thor"
-require "spandx"
 require "dependabot"
 require "dependabot/cli/scan"
 
