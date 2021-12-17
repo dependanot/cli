@@ -10,7 +10,7 @@ module Dependabot
   class Error < StandardError; end
 
   def self.logger
-    @logger ||= Logger.new(&stdout)
+    @logger ||= Logger.new($stderr)
   end
 
   def self.tracer
