@@ -12,12 +12,7 @@ module Dependabot
 
       def run
         each_dependency do |dependency|
-          Dir.chdir(dependency.path.parent) do
-            puts "Updating... #{dependency.name}"
-            ::Spandx::Core::Plugin.enhance(dependency)
-            system "git diff --patch --no-color"
-            system "git checkout ."
-          end
+          update!(dependency)
         end
       end
 
@@ -32,6 +27,25 @@ module Dependabot
       def each_dependency(&block)
         each_file do |file|
           ::Spandx::Core::Parser.parse(file).each(&block)
+        end
+      end
+
+      def update!(dependency)
+        Dir.chdir(dependency.path.parent) do |path|
+          puts "Updating #{dependency.name}..."
+          branch_name = "dependanot/#{dependency.package_manager}/#{dependency.name}"
+
+          repo = Rugged::Repository.discover(dependency.path.parent)
+          branch = repo.create_branch(branch_name, repo.head.name)
+
+          ::Spandx::Core::Plugin.enhance(dependency)
+
+          repo.status { |file, status| puts "#{file} has status: #{status.inspect}" }
+          puts repo.index.diff.patch
+          puts
+
+          repo.branches.delete(branch_name)
+          repo.checkout_head(strategy: :force)
         end
       end
     end

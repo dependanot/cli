@@ -8,7 +8,7 @@ module Dependabot
 
         Dir.chdir(dependency.path.parent) do
           ::Bundler.with_unbundled_env do
-            system "bundle update #{dependency.name} --conservative --quiet --full-index"
+            system "bundle update #{dependency.name} --conservative --verbose"
           end
         end
       end

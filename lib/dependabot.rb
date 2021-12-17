@@ -3,6 +3,7 @@
 require "github"
 require "logger"
 require "octokit"
+require "rugged"
 require "spandx"
 
 require_relative "dependabot/bundler/update"

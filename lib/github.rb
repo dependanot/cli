@@ -9,7 +9,7 @@ class GitHub
     repository: ENV["GITHUB_REPOSITORY"],
     server_url: ENV.fetch("GITHUB_SERVER_URL", "https://github.com"),
     token: default_token,
-    workspace: ENV["GITHUB_WORKSPACE"]
+    workspace: ENV.fetch("GITHUB_WORKSPACE", Dir.pwd)
   )
     @api_url = api_url
     @repository = repository
