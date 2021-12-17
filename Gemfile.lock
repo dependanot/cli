@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dependanot (0.1.1)
+    dependanot (0.1.2)
       octokit (~> 4.0)
       rugged (~> 1.2)
       spandx (~> 0.1)
@@ -94,7 +94,7 @@ GEM
     sorted_set (1.0.3)
       rbtree
       set (~> 1.0)
-    spandx (0.18.2)
+    spandx (0.18.3)
       addressable (~> 2.7)
       bundler (>= 1.16, < 3.0.0)
       hcl2 (~> 0.1)
