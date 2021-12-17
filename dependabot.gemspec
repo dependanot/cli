@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email = ["xlgmokha@github.com"]
   spec.executables = ["dependabot"]
   spec.files = Dir.glob("lib/**/*.rb") + Dir.glob("exe/*") + Dir.glob("*.gemspec") + ["LICENSE.txt", "README.md"]
-  spec.homepage = "https://github.com/dependanot/dependanot"
+  spec.homepage = "https://github.com/dependanot/cli"
   spec.license = "MIT"
   spec.metadata["homepage_uri"] = spec.homepage
   spec.name = "dependanot"
