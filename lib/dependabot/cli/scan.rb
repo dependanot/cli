@@ -40,7 +40,9 @@ module Dependabot
 
           ::Spandx::Core::Plugin.enhance(dependency)
 
-          repo.status { |file, status| puts "#{file} has status: #{status.inspect}" }
+          repo.status do |file, status|
+            puts "#{file} has status: #{status.inspect}"
+          end
           puts repo.index.diff.patch
           puts
 
