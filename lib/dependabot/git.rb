@@ -27,6 +27,7 @@ module Dependabot
         tree: repo.index.write_tree(repo),
         update_ref: "HEAD",
         author: { email: "dependabot[bot]@users.noreply.github.com", name: "dependabot[bot]" },
+        committer: { email: "dependabot[bot]@users.noreply.github.com", name: "dependabot[bot]" },
       })
     end
 
