@@ -48,6 +48,7 @@ module Dependabot
         git.checkout(branch: branch_name)
         yield git
         git.commit(all: true, message: "chore: Update #{dependency.name}")
+        git.push(remote: "origin", branch: branch_name)
       ensure
         git.repo.checkout_head(strategy: :force)
         git.repo.checkout(default_branch)

@@ -14,6 +14,10 @@ module Dependabot
       repo.checkout(branch)
     end
 
+    def push(remote: "origin", branch: "HEAD")
+      repo.push(remote, ["refs/heads/#{branch}"], credentials: credentials)
+    end
+
     def patch
       repo.index.diff.patch
     end
@@ -35,6 +39,14 @@ module Dependabot
 
     def stage(path)
       repo.index.add(path)
+    end
+
+    def credentials
+      if ENV["CI"]
+        Rugged::Credentials::UserPassword.new(username: "x-access-token", password: Dependabot.github.token)
+      else
+        Rugged::Credentials::SshKeyFromAgent.new(username: "git")
+      end
     end
   end
 end
