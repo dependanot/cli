@@ -46,9 +46,8 @@ module Dependabot
       def git_for(dependency, branch_name: branch_name_for(dependency))
         git = ::Dependabot::Git.new(dependency.path.parent)
         git.checkout(branch: branch_name)
-        yield
+        yield git
       ensure
-        git.repo.branches.delete(branch_name)
         git.repo.checkout_head(strategy: :force)
       end
     end
