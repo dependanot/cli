@@ -20,9 +20,9 @@ class GitHub
 
   class << self
     def name_with_owner_from(url)
-      regex = %r{git@github.com:(?<nwo>\w+/\w+)\.git}
+      regex = %r{(?<x>(?<scheme>https|ssh)://)?(?<username>git@)?github.com[:|/](?<nwo>\w+/\w+)(?<extension>\.git)?}
       match = url.match(regex)
-      match["nwo"]
+      match && match["nwo"]
     end
   end
 
