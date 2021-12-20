@@ -18,6 +18,14 @@ class GitHub
     @workspace = workspace
   end
 
+  class << self
+    def name_with_owner_from(url)
+      regex = %r{git@github.com:(?<nwo>\w+/\w+)\.git}
+      match = url.match(regex)
+      match["nwo"]
+    end
+  end
+
   private
 
   def default_api_url
