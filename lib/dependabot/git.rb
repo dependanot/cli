@@ -34,12 +34,7 @@ module Dependabot
     private
 
     def stage(path)
-      repo.index.read_tree(repo.head.target.tree)
-      repo.index.add(
-        path: path,
-        oid: repo.write(File.binread(path), :blob),
-        mode: File.stat(path).mode
-      )
+      repo.index.add(path)
     end
   end
 end

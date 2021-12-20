@@ -45,10 +45,12 @@ module Dependabot
 
       def git_for(dependency, branch_name: branch_name_for(dependency))
         git = ::Dependabot::Git.new(dependency.path.parent)
+        default_branch = git.repo.head.name
         git.checkout(branch: branch_name)
         yield git
       ensure
         git.repo.checkout_head(strategy: :force)
+        git.repo.checkout(default_branch)
       end
     end
   end
