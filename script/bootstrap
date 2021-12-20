@@ -4,4 +4,4 @@ set -e
 
 cd "$(dirname "$0")/.."
 
-sudo yum install libgit2 libgit2-devel
+sudo yum install -y libgit2 libgit2-devel libssh2-devel
