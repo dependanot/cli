@@ -7,6 +7,8 @@ RSpec.describe ::Dependabot::Git do
     context "when a tracked file is changed" do
       def setup_git_repo(path)
         system "git init --quiet #{path}"
+        system "git config user.email you@example.com"
+        system "git config user.name example"
         system "echo 'hello' > README.md"
         system "git add README.md"
         system "git commit --quiet -m 'initial commit'"
