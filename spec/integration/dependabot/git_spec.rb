@@ -5,7 +5,7 @@ require "spec_helper"
 RSpec.describe ::Dependabot::Git do
   describe "#commit" do
     context "when a tracked file is changed" do
-      def setup_git_repo
+      def setup_git_repo(path)
         system "git init --quiet #{path}"
         system "echo 'hello' > README.md"
         system "git add README.md"
@@ -16,7 +16,7 @@ RSpec.describe ::Dependabot::Git do
       def within_dir
         Dir.mktmpdir("dependabot") do |path|
           Dir.chdir(path) do
-            setup_git_repo
+            setup_git_repo(path)
             subject = described_class.new(path)
             subject.checkout(branch: "example")
             subject.commit(all: true, message: "The message")

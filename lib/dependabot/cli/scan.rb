@@ -32,20 +32,24 @@ module Dependabot
 
       def update!(dependency)
         puts "Updating #{dependency.name}..."
-        git = ::Dependabot::Git.new(dependency.path.parent)
-        git.checkout(branch: branch_name_for(dependency))
-
-        ::Spandx::Core::Plugin.enhance(dependency)
-
-        puts git.patch
-        git.commit(all: true, message: "Updating #{dependency.name}")
-
-        git.repo.branches.delete(branch_name_for(dependency))
-        git.repo.checkout_head(strategy: :force)
+        git_for(dependency) do |git|
+          ::Spandx::Core::Plugin.enhance(dependency)
+          puts git.patch
+          git.commit(all: true, message: "Updating #{dependency.name}")
+        end
       end
 
       def branch_name_for(dependency)
         "dependanot/#{dependency.package_manager}/#{dependency.name}"
+      end
+
+      def git_for(dependency, branch_name: branch_name_for(dependency))
+        git = ::Dependabot::Git.new(dependency.path.parent)
+        git.checkout(branch: branch_name)
+        yield
+      ensure
+        git.repo.branches.delete(branch_name)
+        git.repo.checkout_head(strategy: :force)
       end
     end
   end
