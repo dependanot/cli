@@ -8,7 +8,7 @@ module Dependabot
 
         Dir.chdir(dependency.path.parent) do
           ::Bundler.with_unbundled_env do
-            system "bundle update #{dependency.name} --conservative --quiet"
+            system({'RUBYOPT'=>"-W0"}, "bundle update #{dependency.name} --conservative --quiet")
           end
         end
       end

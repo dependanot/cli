@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 RSpec.describe ::Dependabot::Git do
   describe "#commit" do
     context "when a tracked file is changed" do
