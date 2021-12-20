@@ -31,24 +31,21 @@ module Dependabot
       end
 
       def update!(dependency)
-        Dir.chdir(dependency.path.parent) do |path|
-          puts "Updating #{dependency.name}..."
-          branch_name = "dependanot/#{dependency.package_manager}/#{dependency.name}"
+        puts "Updating #{dependency.name}..."
+        git = ::Dependabot::Git.new(dependency.path.parent)
+        git.checkout(branch: branch_name_for(dependency))
 
-          repo = Rugged::Repository.discover(dependency.path.parent)
-          branch = repo.create_branch(branch_name, repo.head.name)
+        ::Spandx::Core::Plugin.enhance(dependency)
 
-          ::Spandx::Core::Plugin.enhance(dependency)
+        puts git.patch
+        git.commit(all: true, message: "Updating #{dependency.name}")
 
-          repo.status do |file, status|
-            puts "#{file} has status: #{status.inspect}"
-          end
-          puts repo.index.diff.patch
-          puts
+        git.repo.branches.delete(branch_name_for(dependency))
+        git.repo.checkout_head(strategy: :force)
+      end
 
-          repo.branches.delete(branch_name)
-          repo.checkout_head(strategy: :force)
-        end
+      def branch_name_for(dependency)
+        "dependanot/#{dependency.package_manager}/#{dependency.name}"
       end
     end
   end
