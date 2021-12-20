@@ -1,4 +1,8 @@
 Usage:
-  dependabot scan [DIRECTORY]
+  dependabot scan [DIRECTORY | FILE]
 
-Scan a directory
+Options:
+  -p, [--push], [--no-push]            # Push the update as a pull request. Default: --no-push
+  -r, [--recursive], [--no-recursive]  # Perform a recursive. Default: --no-recursive
+
+Scan a directory or file for dependencies to update
