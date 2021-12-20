@@ -12,6 +12,7 @@ module Dependabot
 
       def run
         each_dependency do |dependency|
+          Dependabot.logger.debug("Updating #{dependency.name}…")
           update!(dependency)
         end
       end
@@ -31,11 +32,9 @@ module Dependabot
       end
 
       def update!(dependency)
-        puts "Updating #{dependency.name}..."
         git_for(dependency) do |git|
           ::Spandx::Core::Plugin.enhance(dependency)
-          puts git.patch
-          git.commit(all: true, message: "Updating #{dependency.name}")
+          Dependabot.logger.debug(git.patch) unless git.patch.empty?
         end
       end
 
@@ -48,6 +47,7 @@ module Dependabot
         default_branch = git.repo.head.name
         git.checkout(branch: branch_name)
         yield git
+        git.commit(all: true, message: "chore: Update #{dependency.name}")
       ensure
         git.repo.checkout_head(strategy: :force)
         git.repo.checkout(default_branch)
