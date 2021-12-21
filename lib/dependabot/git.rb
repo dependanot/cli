@@ -5,7 +5,6 @@ module Dependabot
     attr_reader :repo
 
     def initialize(path)
-      @path = path
       @repo = Rugged::Repository.discover(path)
     end
 
@@ -16,6 +15,10 @@ module Dependabot
 
     def push(remote: "origin", branch: "HEAD")
       repo.push(remote, ["refs/heads/#{branch}"], credentials: credentials_for(remote))
+    rescue StandardError
+      Dir.chdir(File.dirname(repo.path)) do
+        system("git push #{remote} #{branch}", exception: true)
+      end
     end
 
     def patch
