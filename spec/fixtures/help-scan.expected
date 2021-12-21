@@ -1,7 +1,8 @@
 Usage:
-  dependabot scan [DIRECTORY | FILE]
+  dependabot scan [OPTION]... [FILE]
 
 Options:
+  -d, [--dependency=DEPENDENCY]        # Update a specific dependency
   -p, [--push], [--no-push]            # Push the update as a pull request. Default: --no-push
   -r, [--recursive], [--no-recursive]  # Perform a recursive. Default: --no-recursive
 
