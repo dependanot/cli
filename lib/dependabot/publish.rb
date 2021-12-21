@@ -55,7 +55,7 @@ module Dependabot
         GitHub.name_with_owner_from(git.repo.remotes["origin"].url),
         default_branch,
         branch_name,
-        "chore(deps): bump #{dependency}",
+        "chore(deps): bump #{dependency.name} from #{dependency.version}",
         description_for(dependency)
       )
     end
