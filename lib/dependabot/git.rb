@@ -42,6 +42,7 @@ module Dependabot
     end
 
     def credentials_for(remote)
+      Dependabot.logger.debug(repo.remotes[remote].url)
       if ssh?(repo.remotes[remote].url)
         Rugged::Credentials::SshKeyFromAgent.new(username: "git")
       else
