@@ -15,7 +15,7 @@ module Dependabot
     end
 
     def push(remote: "origin", branch: "HEAD")
-      repo.push(remote, ["refs/heads/#{branch}"], credentials: credentials)
+      repo.push(remote, ["refs/heads/#{branch}"], credentials: credentials_for(remote))
     end
 
     def patch
@@ -41,12 +41,16 @@ module Dependabot
       repo.index.add(path)
     end
 
-    def credentials
-      if ENV["CI"]
-        Rugged::Credentials::UserPassword.new(username: "x-access-token", password: Dependabot.github.token)
-      else
+    def credentials_for(remote)
+      if ssh?(repo.remotes[remote].url)
         Rugged::Credentials::SshKeyFromAgent.new(username: "git")
+      else
+        Rugged::Credentials::UserPassword.new(username: "x-access-token", password: Dependabot.github.token)
       end
+    end
+
+    def ssh?(url)
+      url.include?("git@github.com:")
     end
   end
 end
