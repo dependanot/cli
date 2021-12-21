@@ -7,7 +7,8 @@ require "dependabot/cli/scan"
 module Dependabot
   module CLI
     class Application < Thor
-      desc "scan [DIRECTORY | FILE]", "Scan a directory or file for dependencies to update"
+      desc "scan [OPTION]... [FILE]", "Scan a directory or file for dependencies to update"
+      method_option :dependency, aliases: "-d", type: :string, desc: "Update a specific dependency", default: nil
       method_option :push, aliases: "-p", type: :boolean, desc: "Push the update as a pull request. Default: --no-push", default: false
       method_option :recursive, aliases: "-r", type: :boolean, desc: "Perform a recursive. Default: --no-recursive", default: false
       def scan(path = Pathname.pwd)

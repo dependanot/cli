@@ -12,7 +12,7 @@ module Dependabot
 
       def run
         each_dependency do |dependency|
-          publish_update_for(dependency)
+          update(dependency) if match?(dependency)
         end
       end
 
@@ -30,9 +30,13 @@ module Dependabot
         end
       end
 
-      def publish_update_for(dependency)
+      def update(dependency)
         ::Dependabot.logger.debug("Updating #{dependency.name}…")
         ::Dependabot::Publish.new(dependency).update!(push: options[:push])
+      end
+
+      def match?(dependency)
+        options[:dependency].empty? || options[:dependency].include?(dependency.name)
       end
     end
   end
