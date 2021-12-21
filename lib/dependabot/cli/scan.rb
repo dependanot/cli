@@ -36,7 +36,7 @@ module Dependabot
       end
 
       def match?(dependency)
-        options[:dependency].empty? || options[:dependency].include?(dependency.name)
+        options[:dependency].nil? || options[:dependency] == dependency.name
       end
     end
   end
