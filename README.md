@@ -13,7 +13,7 @@ Install `dependanot` from https://rubygems.org.
 `dependanot` is a CLI that can be invoked via `$ dependabot`. However, it's
 meant to be used from a GitHub Action.
 
-Here's an example that can be added to `.github/workflows/dependanot.yml`.
+This following example can be added to your repo as `.github/workflows/dependanot.yml`.
 
 ```yaml
 name: dependanot
