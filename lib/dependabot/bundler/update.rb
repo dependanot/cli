@@ -3,8 +3,12 @@
 module Dependabot
   module Bundler
     class Update < ::Spandx::Core::Plugin
+      def match?(dependency)
+        dependency.package_manager == :rubygems
+      end
+
       def enhance(dependency)
-        return dependency unless dependency.package_manager == :rubygems
+        return dependency unless match?(dependency)
 
         Dir.chdir(dependency.path.parent) do
           ::Bundler.with_unbundled_env do
