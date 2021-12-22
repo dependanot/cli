@@ -31,8 +31,11 @@ module Dependabot
       end
 
       def update(dependency)
-        ::Dependabot.logger.debug("Updating #{dependency.name}…")
+        ::Dependabot.logger.info("Updating #{dependency.name}…")
         ::Dependabot::Publish.new(dependency).update!(push: options[:push])
+      rescue StandardError => boom
+        Dependabot.logger.error(boom)
+        boom.backtrace.each { |x| Dependabot.logger.debug(x) }
       end
 
       def match?(dependency)

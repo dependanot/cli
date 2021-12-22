@@ -17,7 +17,7 @@ module Dependabot
   class Error < StandardError; end
 
   def self.logger
-    @logger ||= Logger.new($stderr, level: ENV.fetch("LOG_LEVEL", Logger::WARN)).tap do |x|
+    @logger ||= Logger.new($stderr, level: ENV.fetch("LOG_LEVEL", Logger::INFO)).tap do |x|
       x.formatter = proc do |_severity, _datetime, _progname, message|
         "[v#{VERSION}] #{message}\n"
       end
