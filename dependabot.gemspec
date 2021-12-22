@@ -8,7 +8,14 @@ Gem::Specification.new do |spec|
   spec.description = "The Dependabot CLI"
   spec.email = ["xlgmokha@github.com"]
   spec.executables = ["dependabot"]
-  spec.files = Dir.glob("lib/**/*.rb") + Dir.glob("exe/*") + Dir.glob("*.gemspec") + ["LICENSE.txt", "README.md"]
+  spec.files = Dir.glob([
+    "*.gemspec",
+    "LICENSE.txt",
+    "README.md",
+    "exe/*",
+    "lib/**/*.erb",
+    "lib/**/*.rb",
+  ])
   spec.homepage = "https://github.com/dependanot/cli"
   spec.license = "MIT"
   spec.metadata["homepage_uri"] = spec.homepage
