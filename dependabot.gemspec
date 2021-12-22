@@ -5,7 +5,7 @@ require_relative "lib/dependabot/version"
 Gem::Specification.new do |spec|
   spec.authors = ["mo khan"]
   spec.bindir = "exe"
-  spec.description = "The Dependabot CLI"
+  spec.description = "Definitely not Dependabot"
   spec.email = ["xlgmokha@github.com"]
   spec.executables = ["dependabot"]
   spec.files = Dir.glob([
@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.name = "dependanot"
   spec.require_paths = ["lib"]
   spec.required_ruby_version = ">= 3.0.0"
-  spec.summary = "The Dependabot CLI"
+  spec.summary = "Definitely not Dependabot"
   spec.version = Dependabot::VERSION
   spec.add_dependency "bundler", "~> 2.0"
   spec.add_dependency "octokit", "~> 4.0"
