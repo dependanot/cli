@@ -9,7 +9,7 @@ RSpec.describe ::Dependabot::Git do
         system "git config user.name example"
         system "echo 'hello' > README.md"
         system "git add README.md"
-        system "git commit --quiet -m 'initial commit'"
+        system "git commit --quiet --no-gpg-sign -m 'initial commit'"
         system "echo 'change' > README.md"
       end
 

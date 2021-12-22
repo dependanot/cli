@@ -6,6 +6,7 @@ PATH
       octokit (~> 4.0)
       rugged (~> 1.2)
       spandx (>= 0.18.3)
+      straw (~> 0.1)
       thor (~> 1.1)
 
 GEM
@@ -119,6 +120,7 @@ GEM
       thor
       tty-spinner (~> 0.9)
       zeitwerk (~> 2.3)
+    straw (0.1.2)
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
     thor (1.1.0)
@@ -138,7 +140,6 @@ PLATFORMS
 DEPENDENCIES
   debug (~> 1.4)
   dependanot!
-  net-hippie (~> 1.1)
   rake (~> 13.0)
   rspec (~> 3.0)
   rubocop (~> 1.7)

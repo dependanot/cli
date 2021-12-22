@@ -3,30 +3,21 @@
 require "bundler"
 require "erb"
 require "github"
-require "logger"
 require "octokit"
 require "rugged"
 require "spandx"
+require "straw"
 
 require_relative "dependabot/bundler/update"
 require_relative "dependabot/git"
 require_relative "dependabot/publish"
-require_relative "dependabot/tracer"
 require_relative "dependabot/version"
 
 module Dependabot
   class Error < StandardError; end
 
   def self.logger
-    @logger ||= Logger.new($stderr, level: ENV.fetch("LOG_LEVEL", Logger::INFO)).tap do |x|
-      x.formatter = proc do |_severity, _datetime, _progname, message|
-        "[v#{VERSION}] #{message}\n"
-      end
-    end
-  end
-
-  def self.tracer
-    @tracer ||= Tracer.new(logger)
+    ::Straw.logger
   end
 
   def self.octokit

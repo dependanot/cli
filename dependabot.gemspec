@@ -29,5 +29,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "octokit", "~> 4.0"
   spec.add_dependency "rugged", "~> 1.2"
   spec.add_dependency "spandx", ">= 0.18.3"
+  spec.add_dependency "straw", "~> 0.1"
   spec.add_dependency "thor", "~> 1.1"
 end

@@ -21,12 +21,14 @@ RSpec.describe ::Dependabot::Publish do
 
     before do
       Dir.chdir(dir) do
-        system "git init"
+        system "git init --quiet #{dir}"
+        system "git config user.email you@example.com"
+        system "git config user.name example"
         FileUtils.cp(fixture_file("bundler/net-hippie/0.1.0/Gemfile"), dir)
         FileUtils.cp(fixture_file("bundler/net-hippie/0.1.0/Gemfile.lock"), dir)
         system "git add Gemfile*"
         system "git remote add origin https://github.com/#{nwo}.git"
-        system "git commit --no-gpg-sign -m 'initial commit'"
+        system "git commit --quiet --no-gpg-sign -m 'initial commit'"
       end
     end
 

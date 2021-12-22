@@ -2,6 +2,8 @@
 
 module Dependabot
   class Publish
+    include ::Straw::Memoizable
+
     attr_reader :dependency, :git, :head, :base
 
     def initialize(dependency, git: Dependabot::Git.for(dependency))
@@ -35,21 +37,27 @@ module Dependabot
     private
 
     def title
-      "chore(deps): bump #{dependency.name} from #{dependency.version}"
+      memoize(:title) do
+        "chore(deps): bump #{dependency.name} from #{dependency.version}"
+      end
     end
 
     def commit_message
-      <<~COMMIT
+      memoize(:commit_message) do
+        <<~COMMIT
         #{title}
 
         #{description}
-      COMMIT
+        COMMIT
+      end
     end
 
     def description
-      ERB
-        .new(File.read(File.join(__dir__, "templates/pull.md.erb")))
-        .result(binding)
+      memoize(:description) do
+        ERB
+          .new(File.read(File.join(__dir__, "templates/pull.md.erb")))
+          .result(binding)
+      end
     end
   end
 end
