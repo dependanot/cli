@@ -9,6 +9,7 @@ require "spandx"
 require "straw"
 
 require_relative "dependabot/bundler/update"
+require_relative "dependabot/callback"
 require_relative "dependabot/git"
 require_relative "dependabot/publish"
 require_relative "dependabot/version"
@@ -32,5 +33,15 @@ module Dependabot
 
   def self.github
     @github ||= GitHub.new
+  end
+end
+
+module Spandx
+  module Core
+    class LicensePlugin
+      def enhance(dependency)
+        dependency
+      end
+    end
   end
 end

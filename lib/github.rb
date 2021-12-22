@@ -18,6 +18,16 @@ class GitHub
     @workspace = workspace
   end
 
+  def create_pull_request_from(repo, base, head, title, description)
+    Dependabot.octokit.create_pull_request(
+      GitHub.name_with_owner_from(repo.remotes["origin"].url),
+      base,
+      head,
+      title,
+      description
+    )
+  end
+
   class << self
     def name_with_owner_from(url)
       regex = %r{(?<x>(?<scheme>https|ssh)://)?(?<username>git@)?github.com[:|/](?<nwo>\w+/\w+)(?<extension>\.git)?}

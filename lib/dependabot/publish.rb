@@ -14,27 +14,33 @@ module Dependabot
     end
 
     def update!(push: false)
-      git.checkout(branch: head)
-      ::Spandx::Core::Plugin.enhance(dependency)
-      return if git.patch.empty? || !push
-
-      Dependabot.logger.debug(git.patch)
-      git.commit(all: true, message: commit_message)
-      git.push(remote: "origin", branch: head)
-
-      Dependabot.octokit.create_pull_request(
-        GitHub.name_with_owner_from(git.repo.remotes["origin"].url),
-        base,
-        head,
-        title,
-        description
-      )
-    ensure
-      git.repo.checkout_head(strategy: :force)
-      git.repo.checkout(base)
+      transaction(push: push) do |after_commit|
+        ::Spandx::Core::Plugin.enhance(dependency)
+        after_commit.new do
+          Dependabot.logger.debug(git.patch)
+          Dependabot.github.create_pull_request_from(git.repo, base, head, title, description)
+        end
+      end
     end
 
     private
+
+    def transaction(push:)
+      git.checkout(branch: head)
+      callback = yield Callback
+      return if git.patch.empty? || !push
+
+      git.commit(all: true, message: commit_message)
+      git.push(remote: "origin", branch: head)
+      callback.call
+    ensure
+      reset
+    end
+
+    def reset
+      git.repo.checkout_head(strategy: :force)
+      git.repo.checkout(base)
+    end
 
     def title
       memoize(:title) do
