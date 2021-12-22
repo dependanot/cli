@@ -12,6 +12,7 @@ require_relative "dependabot/bundler/update"
 require_relative "dependabot/callback"
 require_relative "dependabot/git"
 require_relative "dependabot/publish"
+require_relative "dependabot/pull_request"
 require_relative "dependabot/version"
 
 module Dependabot

@@ -2,15 +2,17 @@
 
 module Dependabot
   class Publish
-    include ::Straw::Memoizable
-
-    attr_reader :dependency, :git, :head, :base
+    attr_reader :dependency, :git, :pull_request
 
     def initialize(dependency, git: Dependabot::Git.for(dependency))
       @dependency = dependency
       @git = git
-      @head = "dependanot/#{dependency.package_manager}/#{dependency.name}"
-      @base = git.repo.head.name
+      @pull_request = PullRequest.new(
+        nwo: GitHub.name_with_owner_from(git.repo.remotes["origin"].url),
+        base: git.repo.head.name,
+        head: "dependanot/#{dependency.package_manager}/#{dependency.name}",
+        dependency: dependency
+      )
     end
 
     def update!(push: false)
@@ -18,7 +20,7 @@ module Dependabot
         ::Spandx::Core::Plugin.enhance(dependency)
         after_commit.new do
           Dependabot.logger.debug(git.patch)
-          Dependabot.github.create_pull_request_from(git.repo, base, head, title, description)
+          Dependabot.github.create(pull_request)
         end
       end
     end
@@ -26,12 +28,11 @@ module Dependabot
     private
 
     def transaction(push:)
-      git.checkout(branch: head)
+      git.checkout(branch: pull_request.head)
       callback = yield Callback
-      return if git.patch.empty? || !push
+      return if no_changes? || !push
 
-      git.commit(all: true, message: commit_message)
-      git.push(remote: "origin", branch: head)
+      commit_and_push
       callback.call
     ensure
       reset
@@ -39,31 +40,16 @@ module Dependabot
 
     def reset
       git.repo.checkout_head(strategy: :force)
-      git.repo.checkout(base)
+      git.repo.checkout(pull_request.base)
     end
 
-    def title
-      memoize(:title) do
-        "chore(deps): bump #{dependency.name} from #{dependency.version}"
-      end
+    def no_changes?
+      git.patch.empty?
     end
 
-    def commit_message
-      memoize(:commit_message) do
-        <<~COMMIT
-          #{title}
-
-          #{description}
-        COMMIT
-      end
-    end
-
-    def description
-      memoize(:description) do
-        ERB
-          .new(File.read(File.join(__dir__, "templates/pull.md.erb")))
-          .result(binding)
-      end
+    def commit_and_push
+      git.commit(all: true, message: pull_request.commit_message)
+      git.push(remote: "origin", branch: pull_request.head)
     end
   end
 end

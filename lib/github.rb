@@ -18,14 +18,8 @@ class GitHub
     @workspace = workspace
   end
 
-  def create_pull_request_from(repo, base, head, title, description)
-    Dependabot.octokit.create_pull_request(
-      GitHub.name_with_owner_from(repo.remotes["origin"].url),
-      base,
-      head,
-      title,
-      description
-    )
+  def create(action)
+    action.run_against(Dependabot.octokit)
   end
 
   class << self
