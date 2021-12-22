@@ -34,7 +34,8 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 ```
 
-That's it! Consult the [GitHub Actions Documentation][1] to customize the workflow.
+That's it! Consult the [GitHub Actions Documentation][1] to customize the
+workflow or check out the [Examples repo][2].
 
 ## Development
 
@@ -51,3 +52,4 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/depend
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
 [1]: https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions
+[2]: https://github.com/dependanot/examples
