@@ -1,28 +1,40 @@
-# Dependabot
+# Dependanot
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/dependabot`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Dependanot is definitely not [Dependabot](https://github.com/dependabot).
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Install `dependanot` from https://rubygems.org.
 
-```ruby
-gem 'dependabot'
-```
-
-And then execute:
-
-    $ bundle install
-
-Or install it yourself as:
-
-    $ gem install dependabot
+    $ gem install dependanot
 
 ## Usage
 
-TODO: Write usage instructions here
+`dependanot` is a CLI that can be invoked via `$ dependabot`. However, it's
+meant to be used from a GitHub Action.
+
+Here's an example that can be added to `.github/workflows/dependanot.yml`.
+
+```yaml
+name: dependanot
+on:
+  schedule:
+    - cron: '42 * * * *'
+jobs:
+  bundler:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0
+      - run: gem install dependanot
+      - run: dependabot scan --recursive --push $GITHUB_WORKSPACE
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+```
+
+That's it! Consult the [GitHub Actions Documentation][1] to customize the workflow.
 
 ## Development
 
@@ -37,3 +49,5 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/depend
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
+[1]: https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions
