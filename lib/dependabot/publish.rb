@@ -2,54 +2,54 @@
 
 module Dependabot
   class Publish
-    attr_reader :dependency
+    attr_reader :dependency, :git, :head, :base
 
-    def initialize(dependency)
+    def initialize(dependency, git: Dependabot::Git.for(dependency))
       @dependency = dependency
+      @git = git
+      @head = "dependanot/#{dependency.package_manager}/#{dependency.name}"
+      @base = git.repo.head.name
     end
 
     def update!(push: false)
-      git_for(dependency, push: push) do |git|
-        ::Spandx::Core::Plugin.enhance(dependency)
-        Dependabot.logger.debug(git.patch) unless git.patch.empty?
-      end
+      git.checkout(branch: head)
+      ::Spandx::Core::Plugin.enhance(dependency)
+      return if git.patch.empty? || !push
+
+      Dependabot.logger.debug(git.patch)
+      git.commit(all: true, message: commit_message)
+      git.push(remote: "origin", branch: head)
+
+      Dependabot.octokit.create_pull_request(
+        GitHub.name_with_owner_from(git.repo.remotes["origin"].url),
+        base,
+        head,
+        title,
+        description
+      )
+    ensure
+      git.repo.checkout_head(strategy: :force)
+      git.repo.checkout(base)
     end
 
     private
 
-    def branch_name_for(dependency)
-      "dependanot/#{dependency.package_manager}/#{dependency.name}"
+    def title
+      "chore(deps): bump #{dependency.name} from #{dependency.version}"
     end
 
-    def git_for(dependency, branch_name: branch_name_for(dependency), push: false)
-      git = ::Dependabot::Git.new(dependency.path.parent)
-      default_branch = git.repo.head.name
-      git.checkout(branch: branch_name)
-      yield git
-      publish_pull_request_for(dependency, default_branch, branch_name, git, push) unless git.patch.empty?
-    ensure
-      git.repo.checkout_head(strategy: :force)
-      git.repo.checkout(default_branch)
+    def commit_message
+      <<~COMMIT
+        #{title}
+
+        #{description}
+      COMMIT
     end
 
-    def description_for(dependency)
+    def description
       ERB
         .new(File.read(File.join(__dir__, "templates/pull.md.erb")))
         .result(binding)
-    end
-
-    def publish_pull_request_for(dependency, default_branch, branch_name, git, push)
-      git.commit(all: true, message: "chore: Update #{dependency.name}")
-      return unless push
-
-      git.push(remote: "origin", branch: branch_name)
-      Dependabot.octokit.create_pull_request(
-        GitHub.name_with_owner_from(git.repo.remotes["origin"].url),
-        default_branch,
-        branch_name,
-        "chore(deps): bump #{dependency.name} from #{dependency.version}",
-        description_for(dependency)
-      )
     end
   end
 end

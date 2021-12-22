@@ -8,6 +8,10 @@ module Dependabot
       @repo = Rugged::Repository.discover(path)
     end
 
+    def self.for(dependency)
+      new(dependency.path.parent)
+    end
+
     def checkout(branch:)
       repo.create_branch(branch, repo.head.name)
       repo.checkout(branch)

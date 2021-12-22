@@ -1,0 +1,10 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    net-hippie (0.1.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  net-hippie (~> 0.1)

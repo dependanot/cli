@@ -4,6 +4,7 @@ require "bundler/setup"
 require "dependabot/cli"
 require "securerandom"
 require "tmpdir"
+require "webmock/rspec"
 
 Dir["./spec/support/**/*.rb"].each { |f| require f }
 
