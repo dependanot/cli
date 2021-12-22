@@ -33,17 +33,9 @@ module Dependabot
     end
 
     def description_for(dependency)
-      <<~MARKDOWN
-        Bumps [#{dependency.name}](#)
-
-        <details>
-        <summary>Changelog</summary>
-        </details>
-
-        <details>
-        <summary>Commits</summary>
-        </details>
-      MARKDOWN
+      ERB
+        .new(File.read(File.join(__dir__, "templates/pull.md.erb")))
+        .result(binding)
     end
 
     def publish_pull_request_for(dependency, default_branch, branch_name, git, push)
