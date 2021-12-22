@@ -45,9 +45,9 @@ module Dependabot
     def commit_message
       memoize(:commit_message) do
         <<~COMMIT
-        #{title}
+          #{title}
 
-        #{description}
+          #{description}
         COMMIT
       end
     end
