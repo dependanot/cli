@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dependanot (0.1.10)
+    dependanot (0.1.11)
       bundler (~> 2.0)
       octokit (~> 4.0)
       rugged (~> 1.2)
