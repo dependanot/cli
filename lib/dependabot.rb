@@ -9,6 +9,7 @@ require "spandx"
 require "straw"
 
 require_relative "dependabot/bundler/update"
+require_relative "dependabot/npm/update"
 require_relative "dependabot/callback"
 require_relative "dependabot/git"
 require_relative "dependabot/publish"

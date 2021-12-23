@@ -30,9 +30,12 @@ module Dependabot
     def transaction(push:)
       git.checkout(branch: pull_request.head)
       callback = yield Callback
-      return if no_changes? || !push
+      return if no_changes?
 
-      commit_and_push
+      git.commit(all: true, message: pull_request.commit_message)
+      return unless push
+
+      git.push(remote: "origin", branch: pull_request.head)
       callback.call
     ensure
       reset
@@ -45,11 +48,6 @@ module Dependabot
 
     def no_changes?
       git.patch.empty?
-    end
-
-    def commit_and_push
-      git.commit(all: true, message: pull_request.commit_message)
-      git.push(remote: "origin", branch: pull_request.head)
     end
   end
 end

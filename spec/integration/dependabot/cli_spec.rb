@@ -9,7 +9,7 @@ RSpec.describe Dependabot::CLI, type: :cli do
     subject!(:dependabot) { File.join(Dir.pwd, "exe/dependabot") }
 
     context "when scanning a bundler v1 project" do
-      it "publishes a pull request for each package" do
+      specify do
         within_tmp_dir do |path|
           system "git clone --quiet https://github.com/dependanot/dependalot ."
           system "gem install 'bundler:~>1.0'"
@@ -20,11 +20,21 @@ RSpec.describe Dependabot::CLI, type: :cli do
     end
 
     context "when scanning a bundler v2 project" do
-      it "publishes a pull request for each package" do
+      specify do
         within_tmp_dir do |path|
           system "git clone --quiet https://github.com/dependanot/dependalot ."
           system "#{dependabot} scan #{path}/src/bundler/v2/"
           expect(`git branch | grep dependanot | wc -l`.chomp.to_i).to be > 40
+        end
+      end
+    end
+
+    context "when scanning an npm project" do
+      specify do
+        within_tmp_dir do |path|
+          system "git clone --quiet https://github.com/dependanot/dependalot ."
+          system "#{dependabot} scan #{path}/src/npm/"
+          expect(`git branch | grep dependanot | wc -l`.chomp.to_i).to eq(1)
         end
       end
     end
