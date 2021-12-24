@@ -11,7 +11,6 @@ RSpec.describe Dependabot::CLI, type: :cli do
       specify do
         within_tmp_dir do |path|
           system "git clone --quiet https://github.com/dependanot/dependalot ."
-          system "gem install 'bundler:~>1.0'"
           system "#{dependabot} scan #{path}/src/bundler/v1/"
           expect(`git branch | grep dependanot | wc -l`.chomp.to_i).to be > 35
         end

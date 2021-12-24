@@ -4,5 +4,5 @@ set -e
 
 cd "$(dirname "$0")/.."
 
-gem install bundler
+gem install "bundler:~>1.0" "bundler:~>2.0"
 bundle install
