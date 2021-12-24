@@ -11,7 +11,7 @@ module Dependabot
         return dependency unless match?(dependency)
 
         Dir.chdir(dependency.path.parent) do
-          system("rm -fr node_modules")
+          system("rm -fr node_modules/#{dependency.name}")
           system("npm update #{dependency.name}")
         end
         dependency
