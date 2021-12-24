@@ -13,7 +13,7 @@ module Dependabot
     end
 
     def checkout(branch:)
-      repo.create_branch(branch, repo.head.name)
+      repo.create_branch(branch, repo.head.name) unless repo.branches[branch]
       repo.checkout(branch)
     end
 

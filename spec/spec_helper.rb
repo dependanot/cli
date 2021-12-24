@@ -3,6 +3,7 @@
 require "bundler/setup"
 require "dependabot/cli"
 require "securerandom"
+require "debug"
 require "tmpdir"
 require "webmock/rspec"
 
