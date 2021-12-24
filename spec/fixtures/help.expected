@@ -1,0 +1,5 @@
+Commands:
+  dependabot help [COMMAND]           # Describe available commands or one specific command
+  dependabot scan [OPTION]... [FILE]  # Scan a directory or file for dependencies to update
+  dependabot version                  # Print the current version
+

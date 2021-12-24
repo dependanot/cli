@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe Dependabot::CLI, type: :cli do
-  it "executes `dependabot help scan` command successfully" do
-    expect(`./exe/dependabot help scan`).to eq(fixture_file_content("help-scan.expected"))
-  end
+  it { expect(`./exe/dependabot help scan`).to eq(fixture_file_content("help-scan.expected")) }
+  it { expect(`./exe/dependabot help`).to eq(fixture_file_content("help.expected")) }
 
   describe Dependabot::CLI::Scan do
     subject!(:dependabot) { File.join(Dir.pwd, "exe/dependabot") }

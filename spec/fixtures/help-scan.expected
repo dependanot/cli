@@ -5,5 +5,6 @@ Options:
   -d, [--dependency=DEPENDENCY]        # Update a specific dependency
   -p, [--push], [--no-push]            # Push the update as a pull request. Default: --no-push
   -r, [--recursive], [--no-recursive]  # Perform a recursive. Default: --no-recursive
+  -v, [--verbose], [--no-verbose]      # Increase verbosity. Default: --no-verbose
 
 Scan a directory or file for dependencies to update
