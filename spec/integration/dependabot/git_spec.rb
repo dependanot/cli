@@ -25,7 +25,7 @@ RSpec.describe ::Dependabot::Git do
         end
       end
 
-      it { within_dir { expect(`git log --oneline | wc -l`.chomp).to eq("2") } }
+      it { within_dir { expect(`git log --oneline | wc -l`.strip).to eq("2") } }
       it { within_dir { expect(`git log --oneline`).to match("The message") } }
     end
   end
