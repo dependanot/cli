@@ -10,7 +10,7 @@ RSpec.describe Dependabot::CLI, type: :cli do
     context "when scanning a bundler v1 project" do
       specify do
         within_tmp_dir do |path|
-          system "git clone --quiet https://github.com/dependanot/dependalot ."
+          system "git clone --quiet https://github.com/dependanot/examples ."
           system "#{dependabot} scan #{path}/src/bundler/v1/"
           expect(`git branch | grep dependanot | wc -l`.chomp.to_i).to be > 35
         end
@@ -20,7 +20,7 @@ RSpec.describe Dependabot::CLI, type: :cli do
     context "when scanning a bundler v2 project" do
       specify do
         within_tmp_dir do |path|
-          system "git clone --quiet https://github.com/dependanot/dependalot ."
+          system "git clone --quiet https://github.com/dependanot/examples ."
           system "#{dependabot} scan #{path}/src/bundler/v2/"
           expect(`git branch | grep dependanot | wc -l`.chomp.to_i).to be > 40
         end
@@ -30,7 +30,7 @@ RSpec.describe Dependabot::CLI, type: :cli do
     context "when scanning an npm project" do
       specify do
         within_tmp_dir do |path|
-          system "git clone --quiet https://github.com/dependanot/dependalot ."
+          system "git clone --quiet https://github.com/dependanot/examples ."
           system "#{dependabot} scan #{path}/src/npm/"
           expect(`git branch | grep dependanot | wc -l`.chomp.to_i).to eq(1)
         end
